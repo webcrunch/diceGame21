@@ -10,5 +10,26 @@ def player_turn():
     player_score = 0
     print("\nDin tur att spela.")
 
+    while True:
+        choice = input(
+            "Vill du rulla tärningen (rulla) eller stanna (stanna)? "
+        ).lower()
 
-print(roll_dice())
+        if choice == "rulla":
+            dice_roll = roll_dice()
+            player_score += dice_roll
+            print(f"Du slog en {dice_roll}. Din totala poäng är nu {player_score}.")
+
+            if player_score > 21:
+                print("Din poäng är över 21! Du förlorar direkt.")
+                return player_score
+
+        elif choice == "stanna":
+            print(f"Du valde att stanna på {player_score} poäng.")
+            return player_score
+
+        else:
+            print("Ogiltigt val. Välj 'rulla' eller 'stanna'.")
+
+
+player_turn()
