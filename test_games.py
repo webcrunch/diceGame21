@@ -27,6 +27,23 @@ class TestGameLogic(unittest.TestCase):
         self.assertEqual(result, "player")
         print(f"Then spelaren ska vara vinnaren. Resultat: '{result}' - TEST GODKÄNT")
 
+    def test_winner_determination_player_wins(self):
+        self._print_scenario("Spelare över 21")
+
+        # Given: Spelaren har 18 poäng och dealern har 15
+        player_score = 22
+        dealer_score = 15
+        print(f"Given en spelare med poäng {player_score}")
+        print(f"And en dealer med poäng {dealer_score}")
+
+        # When: Spelet slutar
+        result = determine_winner_and_return_result(player_score, dealer_score)
+        print("When spelet slutar")
+
+        # Then: Spelaren ska vara förloraren
+        self.assertEqual(result, "dealer")
+        print(f"Then spelaren ska vara förlorare. Resultat: '{result}' - TEST GODKÄNT")
+
     def test_winner_determination_dealer_wins(self):
         self._print_scenario("Dealer vinner")
 
