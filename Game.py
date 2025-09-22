@@ -1,35 +1,14 @@
-# Game.py
-
-import os.path
 from Player import Player
+from ScoreManager import ScoreManager
 from Utils import determine_winner_and_return_result
 
 
 class Game:
     def __init__(self):
+        self.score_manager = ScoreManager()
+        self.scores = self.score_manager.load_scores()
         self.player = Player("Spelare")
         self.dealer = Player("Dealer")
-        self.scores = {"player_wins": 0, "dealer_wins": 0}
-        self.load_scores()
-
-    def load_scores(self):
-        if os.path.exists("scores.txt"):
-            with open("scores.txt", "r") as file:
-                for line in file:
-                    try:
-                        key, value = line.strip().split(":")
-                        self.scores[key] = int(value)
-                    except (ValueError, IndexError):
-                        # Ignorera felaktiga rader för att undvika krascher
-                        continue
-        print("Nuvarande ställning:")
-        print(f"Spelare: {self.scores['player_wins']} vinster")
-        print(f"Dealer: {self.scores['dealer_wins']} vinster")
-
-    def save_scores(self):
-        with open("scores.txt", "w") as file:
-            for key, value in self.scores.items():
-                file.write(f"{key}:{value}\n")
 
     def play_round(self):
         print("\nNy runda startar!")
@@ -67,12 +46,10 @@ class Game:
         print(self.player)
         print(self.dealer)
 
-        # Här bestäms vinnaren för att uppdatera poängen
+        # Bestämmer vinnaren för att uppdatera poängen
         winner = determine_winner_and_return_result(
             self.player.score, self.dealer.score
         )
-
-        # print(winner) - Denna rad kan du ta bort då den bara var för att testa
 
         if winner == "player":
             self.scores["player_wins"] += 1
@@ -83,4 +60,5 @@ class Game:
         print(f"Spelare: {self.scores['player_wins']} vinster")
         print(f"Dealer: {self.scores['dealer_wins']} vinster")
 
-        self.save_scores()
+        # Spara poängen med ScoreManager-instansen
+        self.score_manager.save_scores(self.scores)
