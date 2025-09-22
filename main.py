@@ -1,4 +1,4 @@
-from Game import Game  # Här importerar du Game-klassen
+from Game import Game
 
 
 def main():
