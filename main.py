@@ -63,4 +63,21 @@ def determine_winner(player_score, dealer_score):
         print("Det blev oavgjort!")
 
 
-determine_winner(23, 15)
+def main():
+    while True:
+        player_score = player_turn()
+        dealer_score = dealer_turn()
+
+        print(f"\nSPELET ÄR SLUT:")
+        print(f"Din poäng: {player_score}")
+        print(f"Dealerns poäng: {dealer_score}")
+
+        determine_winner(player_score, dealer_score)
+
+        play_again = input("\nVill du spela igen? (ja/nej): ").lower()
+        if play_again != "ja":
+            print("Tack för att du spelade!")
+            break
+
+
+main()
