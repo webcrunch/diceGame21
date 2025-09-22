@@ -21,7 +21,7 @@ Detta är ett enkelt tärningsspel för terminalen, inspirerat av Blackjack. Spe
 
 ```bash
 python main.py
-
+```
 
 ## 🎮 Hur man spelar
 Spelet guidar dig genom varje runda. Du kommer att få alternativet att antingen "rulla" tärningen för att öka din poäng, eller "stanna" när du är nöjd.
@@ -33,23 +33,18 @@ Förlora: Få en poäng som är högre än 21.
 Oavgjort: Få samma poäng som dealern.
 
 
-📁 Projektstruktur
+## 📁 Projektstruktur
 Följande filer utgör projektet:
 
-main.py: Startpunkten för spelet.
+- main.py: Startpunkten för spelet.
 
-Player.py: Klass som representerar en spelare (både den mänskliga spelaren och dealern).
+- Player.py: Klass som representerar en spelare (både den mänskliga spelaren och dealern).
 
-Game.py: Klass som hanterar spelets huvudlogik och flöde.
+- Game.py: Klass som hanterar spelets huvudlogik och flöde.
 
-Utils.py: Fil med generella hjälpfunktioner, inklusive vinnarlogiken.
+- Utils.py: Fil med generella hjälpfunktioner, inklusive vinnarlogiken.
 
-scores.txt: Textfil för att spara highscore.
+- scores.txt: Textfil för att spara highscore.
 
-test_game.py: Testfilen för att validera spelets funktionalitet.
+- test_game.py: Testfilen för att validera spelets funktionalitet.
 
-🧪 Tester
-För att köra testerna, använd följande kommando i din terminal:
-
-bash
-python -m unittest test_game.py
