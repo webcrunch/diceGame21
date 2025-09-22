@@ -49,4 +49,18 @@ def dealer_turn():
     return dealer_score
 
 
-print(dealer_turn())
+def determine_winner(player_score, dealer_score):
+    if player_score > 21:
+        # Den här regeln hanteras redan i player_turn, men det är bra att dubbelkolla
+        print("Du förlorade, eftersom din poäng är över 21.")
+    elif dealer_score > 21:
+        print("Du vinner! Dealerns poäng är över 21.")
+    elif player_score > dealer_score:
+        print("Du vinner! Din poäng är närmare 21 än dealerns.")
+    elif player_score < dealer_score:
+        print("Du förlorar. Dealerns poäng är närmare 21 än din.")
+    else:  # player_score == dealer_score
+        print("Det blev oavgjort!")
+
+
+determine_winner(23, 15)
