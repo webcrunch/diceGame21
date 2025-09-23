@@ -57,7 +57,7 @@ Följande filer utgör projektet:
 För att köra testerna, använd följande kommando i din terminal:
 
 ```bash
-python -m unittest test_game.py
+python -m unittest test_games.py
 ```
 
 ##### Detta är hur testerna kommer att se ut, :

@@ -7,6 +7,19 @@ from Game import Game
 from Utils import determine_winner_and_return_result
 from ScoreManager import ScoreManager
 
+# Testerna:
+# Jag har 7 test som jag har tagit med. 6 av dem kommer att passera med jag tog med ett som falerade för att visa hur det ser ut.
+
+# Det är en blandning av att jag ser så att dealern stannar vi 17+ poäng.
+# Att poänger per tärningskast är mellan 1-6.
+# Att se så att rätt person vinner gällande rätt scenarium.
+# Att simulera ett felaktigt test
+# Att Man kan läsa in från fil och spara till fil.
+
+# jag har gjort detta för att kunna verifiera att de funktioner som hantera spelstrukturen fungerar.
+# Annars kommer spelet inte att fungera.
+# Att hantera fil inläsning och skrivning är inte det viktigaste men tyckte det var bra att ha med.
+
 
 class TestGameLogic(unittest.TestCase):
 
