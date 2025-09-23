@@ -1,93 +1,11 @@
-# import unittest
-# from Player import Player
-# from Game import Game
-# from Utils import determine_winner_and_return_result
-
-
-# class TestGameLogic(unittest.TestCase):
-
-#     def _print_scenario(self, description):
-#         """Hjälpmetod för att skriva ut en tydlig rubrik för varje scenario."""
-#         print(f"\n--- Scenario: {description} ---")
-
-#     def test_winner_determination_player_wins(self):
-#         self._print_scenario("Dealer vinner")
-
-#         # Given: Spelaren har 18 poäng och dealern har 15
-#         player_score = 18
-#         dealer_score = 15
-#         print(f"Given en spelare med poäng {player_score}")
-#         print(f"And en dealer med poäng {dealer_score}")
-
-#         # When: Spelet slutar
-#         result = determine_winner_and_return_result(player_score, dealer_score)
-#         print("When spelet slutar")
-
-#         # Then: Spelaren ska vara vinnaren
-#         self.assertEqual(result, "player")
-#         print(f"Then spelaren ska vara vinnaren. Resultat: '{result}' - TEST GODKÄNT")
-
-#     def test_2winner_determination_dealer_wins(self):
-#         self._print_scenario("Player vinner")
-
-#         # Given: Spelaren har 15 poäng och dealern har 18
-#         player_score = 15
-#         dealer_score = 18
-#         print(f"Given en spelare med poäng {player_score}")
-#         print(f"And en dealer med poäng {dealer_score}")
-
-#         # When: Spelet slutar
-#         result = determine_winner_and_return_result(player_score, dealer_score)
-#         print("When spelet slutar")
-
-#         # Then: Dealern ska vara vinnaren
-#         self.assertEqual(result, "dealer")
-#         print(f"Then dealern ska vara vinnaren. Resultat: '{result}' - TEST GODKÄNT")
-
-#     def test_4winner_determination_player_over_21(self):
-#         self._print_scenario("Spelare över 21")
-
-#         # Given: Spelaren har 18 poäng och dealern har 15
-#         player_score = 22
-#         dealer_score = 15
-#         print(f"Given en spelare med poäng {player_score}")
-#         print(f"And en dealer med poäng {dealer_score}")
-
-#         # When: Spelet slutar
-#         result = determine_winner_and_return_result(player_score, dealer_score)
-#         print("When spelet slutar")
-
-#         # Then: Spelaren ska vara förloraren
-#         self.assertEqual(result, "dealer")
-#         print(f"Then Spelare ska vara förlorare. Resultat: '{result}' - TEST GODKÄNT")
-
-#     def test_3winner_determination_draw(self):
-#         self._print_scenario("Oavgjort")
-
-#         # Given: Spelaren har 17 poäng och dealern har 17
-#         player_score = 17
-#         dealer_score = 17
-#         print(f"Given en spelare med poäng {player_score}")
-#         print(f"And en dealer med poäng {dealer_score}")
-
-#         # When: Spelet slutar
-#         result = determine_winner_and_return_result(player_score, dealer_score)
-#         print("When spelet slutar")
-
-#         # Then: Spelet ska vara oavgjort
-#         self.assertEqual(result, "draw")
-#         print(f"Then spelet ska vara oavgjort. Resultat: '{result}' - TEST GODKÄNT")
-
-#     # Lägg till dina andra tester här på samma sätt
-
-
-# if __name__ == "__main__":
-#     unittest.main()
-
 import unittest
+from unittest.mock import mock_open, patch
+import os
+
 from Player import Player
 from Game import Game
 from Utils import determine_winner_and_return_result
+from ScoreManager import ScoreManager
 
 
 class TestGameLogic(unittest.TestCase):
@@ -98,9 +16,6 @@ class TestGameLogic(unittest.TestCase):
             player = Player("Testspelare")
             roll = player.roll_dice()
 
-            # Given: En spelare kastar tärning
-            # When: Ett kast inträffar
-            # Then: Resultatet ska vara mellan 1 och 6
             self.assertIn(roll, range(1, 7))
 
             print(f"✅ Test 1: Tärningskastet {roll} är inom intervallet 1-6.")
@@ -114,12 +29,9 @@ class TestGameLogic(unittest.TestCase):
             game = Game()
             game.dealer.score = 0
 
-            # Given: En dealer med poäng under 17
             while game.dealer.score < 17:
                 game.dealer.score += 5
 
-            # When: Dealerns tur slutar
-            # Then: Dealerns poäng ska vara minst 17
             self.assertGreaterEqual(game.dealer.score, 17)
             self.assertLessEqual(game.dealer.score, 21)
 
@@ -131,19 +43,19 @@ class TestGameLogic(unittest.TestCase):
     def test_winner_determination(self):
         print("\n--- Scenario: Vinnare bestäms korrekt ---")
         try:
-            # Scenario 1: Spelaren vinner
+            # Spelaren vinner
             self.assertEqual(determine_winner_and_return_result(20, 18), "player")
 
-            # Scenario 2: Dealern vinner
+            # Dealern vinner
             self.assertEqual(determine_winner_and_return_result(19, 20), "dealer")
 
-            # Scenario 3: Spelaren går över 21
+            # Spelaren går över 21
             self.assertEqual(determine_winner_and_return_result(22, 15), "dealer")
 
-            # Scenario 4: Dealern går över 21
+            # Dealern går över 21
             self.assertEqual(determine_winner_and_return_result(18, 23), "player")
 
-            # Scenario 5: Oavgjort
+            # Oavgjort
             self.assertEqual(determine_winner_and_return_result(18, 18), "draw")
 
             print("✅ Test 3: Vinnarbestämning fungerar i alla scenarion.")
@@ -154,19 +66,69 @@ class TestGameLogic(unittest.TestCase):
     def test_winner_determination_failing(self):
         print("\n--- Scenario: Simulerar ett fallerande vinnartest ---")
         try:
-            # Given: Spelare 20 poäng, Dealer 18 poäng
             player_score, dealer_score = 20, 18
-
-            # When: Spelet slutar
             result = determine_winner_and_return_result(player_score, dealer_score)
-
-            # Then: Vi förväntar oss felaktigt att resultatet är 'draw'
             self.assertEqual(result, "draw")
 
             print("✅ Simulerat fallerande test - godkänt (detta ska inte hända!)")
         except AssertionError as e:
             print(f"❌ Simulerat fallerande test - misslyckades korrekt.")
             print(f"Förväntat: 'draw', men fick: '{result}'")
+            raise e
+
+
+class TestScoreManager(unittest.TestCase):
+
+    def setUp(self):
+        self.score_manager = ScoreManager("test_scores.txt")
+
+    def test_load_scores_from_file(self):
+        print("\n--- Scenario: Highscore kan läsas in från en fil ---")
+        try:
+            file_content = "player_wins:5\ndealer_wins:3\n"
+            with patch(
+                "builtins.open", mock_open(read_data=file_content)
+            ) as mocked_file, patch("os.path.exists", return_value=True):
+
+                loaded_scores = self.score_manager.load_scores()
+
+                mocked_file.assert_called_with("test_scores.txt", "r")
+                self.assertEqual(loaded_scores["player_wins"], 5)
+                self.assertEqual(loaded_scores["dealer_wins"], 3)
+
+            print("✅ Test: Inläsning av highscore från fil fungerar.")
+        except AssertionError as e:
+            print(f"❌ Test: Inläsning av highscore från fil misslyckades.")
+            raise e
+
+    def test_save_scores_to_file(self):
+        print("\n--- Scenario: Highscore kan sparas till en fil ---")
+        try:
+            scores_to_save = {"player_wins": 10, "dealer_wins": 8}
+            with patch("builtins.open", mock_open()) as mocked_file:
+                self.score_manager.save_scores(scores_to_save)
+
+                mocked_file.assert_called_with("test_scores.txt", "w")
+                handle = mocked_file()
+                handle.write.assert_any_call("player_wins:10\n")
+                handle.write.assert_any_call("dealer_wins:8\n")
+
+            print("✅ Test: Spara highscore till fil fungerar.")
+        except AssertionError as e:
+            print(f"❌ Test: Spara highscore till fil misslyckades.")
+            raise e
+
+    def test_load_scores_from_non_existent_file(self):
+        print("\n--- Scenario: Standardpoäng laddas om filen inte finns ---")
+        try:
+            with patch("os.path.exists", return_value=False):
+                loaded_scores = self.score_manager.load_scores()
+                self.assertEqual(loaded_scores["player_wins"], 0)
+                self.assertEqual(loaded_scores["dealer_wins"], 0)
+
+            print("✅ Test: Standardpoäng laddas när fil inte finns.")
+        except AssertionError as e:
+            print(f"❌ Test: Standardpoäng laddas inte när fil inte finns.")
             raise e
 
 

@@ -59,7 +59,9 @@ För att köra testerna, använd följande kommando i din terminal:
 ```bash
 python -m unittest test_game.py
 ```
-Du kommer att få se denna utskriften som visar de tester som fungerar: 
+
+##### Detta är hur testerna kommer att se ut, :
+Jag har lagt till ett felande test med. 
 
 --- Scenario: Dealer-logik stannar vid 17+ ---
 ✅ Test 2: Dealerns poäng 20 är korrekt.
@@ -80,5 +82,18 @@ Du vinner! Din poäng är närmare 21 än dealerns.
 ❌ Simulerat fallerande test - misslyckades korrekt.
 Förväntat: 'draw', men fick: 'player'
 F
-----------------------------------------------------------------------
-Ran 4 tests in 0.002s
+--- Scenario: Highscore kan läsas in från en fil ---
+✅ Test: Inläsning av highscore från fil fungerar.
+.
+--- Scenario: Standardpoäng laddas om filen inte finns ---
+✅ Test: Standardpoäng laddas när fil inte finns.
+.
+--- Scenario: Highscore kan sparas till en fil ---
+✅ Test: Spara highscore till fil fungerar.
+.
+---
+
+
+
+
+
