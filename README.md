@@ -52,3 +52,33 @@ Följande filer utgör projektet:
 
 
 ---
+
+## ✅ Tester
+För att köra testerna, använd följande kommando i din terminal:
+
+```bash
+python -m unittest test_game.py
+```
+Du kommer att få se denna utskriften som visar de tester som fungerar: 
+
+--- Scenario: Dealer-logik stannar vid 17+ ---
+✅ Test 2: Dealerns poäng 20 är korrekt.
+.
+--- Scenario: Tärningskast är giltigt ---
+✅ Test 1: Tärningskastet 5 är inom intervallet 1-6.
+.
+--- Scenario: Vinnare bestäms korrekt ---
+Du vinner! Din poäng är närmare 21 än dealerns.
+Du förlorar. Dealerns poäng är närmare 21 än din.
+Du förlorade, eftersom din poäng är över 21.
+Du vinner! Dealerns poäng är över 21.
+Det blev oavgjort!
+✅ Test 3: Vinnarbestämning fungerar i alla scenarion.
+.
+--- Scenario: Simulerar ett fallerande vinnartest ---
+Du vinner! Din poäng är närmare 21 än dealerns.
+❌ Simulerat fallerande test - misslyckades korrekt.
+Förväntat: 'draw', men fick: 'player'
+F
+----------------------------------------------------------------------
+Ran 4 tests in 0.002s
