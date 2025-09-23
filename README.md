@@ -61,8 +61,10 @@ python -m unittest test_game.py
 ```
 
 ##### Detta är hur testerna kommer att se ut, :
+
 Jag har lagt till ett felande test med. 
 
+```bash
 --- Scenario: Dealer-logik stannar vid 17+ ---
 ✅ Test 2: Dealerns poäng 20 är korrekt.
 .
@@ -91,6 +93,7 @@ F
 --- Scenario: Highscore kan sparas till en fil ---
 ✅ Test: Spara highscore till fil fungerar.
 .
+```
 ---
 
 
